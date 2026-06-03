@@ -7,340 +7,126 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --pink: #F10090;
-    --purple: #6A2CF5;
-    --navy: #1A0C42;
-    --plum: #33012A;
-    --pink-10: #fde8f5;
-    --pink-30: #FCC6E6;
-    --purple-30: #DED0FD;
-    --cyan: #00DDFF;
-    --green: #00E5B6;
-    --bg: #f7f6fb;
-    --surface: #ffffff;
-    --border: #e8e4f0;
-    --text: #1A0C42;
-    --text-muted: #7a6e99;
-    --text-light: #b0a8cc;
-    --radius: 12px;
-    --radius-sm: 8px;
-    --shadow: 0 2px 12px rgba(26,12,66,0.07);
-    --shadow-md: 0 4px 24px rgba(26,12,66,0.11);
+    --pink:#F10090; --purple:#6A2CF5; --navy:#1A0C42; --plum:#33012A;
+    --pink-10:#fde8f5; --pink-30:#FCC6E6; --purple-30:#DED0FD;
+    --bg:#f7f6fb; --surface:#ffffff; --border:#e8e4f0;
+    --text:#1A0C42; --text-muted:#7a6e99; --text-light:#b0a8cc;
+    --radius:12px; --radius-sm:8px;
+    --shadow:0 2px 12px rgba(26,12,66,0.07);
+    --shadow-md:0 4px 24px rgba(26,12,66,0.11);
   }
+  body { font-family:'Poppins',Arial,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; font-size:14px; }
+  .site-header { background:var(--navy); padding:0 2rem; display:flex; align-items:center; justify-content:space-between; height:60px; position:sticky; top:0; z-index:100; }
+  .header-left { display:flex; align-items:center; gap:14px; }
+  .logo-mark { width:32px; height:32px; border-radius:8px; background:var(--pink); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:16px; color:#fff; }
+  .header-title { color:#fff; font-size:15px; font-weight:600; }
+  .header-sub { color:rgba(255,255,255,0.45); font-size:11px; }
+  .header-badge { background:rgba(241,0,144,0.2); border:1px solid rgba(241,0,144,0.4); color:var(--pink-30); font-size:11px; font-weight:600; padding:3px 10px; border-radius:20px; }
+  .accent-bar { height:3px; background:linear-gradient(90deg,var(--pink),var(--purple)); }
+  .layout { display:grid; grid-template-columns:220px 1fr; min-height:calc(100vh - 63px); }
+  .sidebar { background:var(--surface); border-right:1px solid var(--border); padding:1.5rem 0; position:sticky; top:63px; height:calc(100vh - 63px); overflow-y:auto; }
+  .sidebar-section { padding:0 1rem; margin-bottom:1.5rem; }
+  .sidebar-label { font-size:10px; font-weight:600; letter-spacing:1px; color:var(--text-light); text-transform:uppercase; padding:0 0.5rem; margin-bottom:0.4rem; }
+  .nav-item { display:flex; align-items:center; gap:10px; padding:0.55rem 0.75rem; border-radius:var(--radius-sm); cursor:pointer; color:var(--text-muted); font-size:13px; font-weight:500; transition:all 0.15s; border:none; background:none; width:100%; text-align:left; }
+  .nav-item svg { width:16px; height:16px; flex-shrink:0; }
+  .nav-item:hover { background:var(--pink-10); color:var(--text); }
+  .nav-item.active { background:var(--pink-10); color:var(--pink); font-weight:600; }
+  .nav-item .badge { margin-left:auto; background:var(--pink-30); color:var(--pink); font-size:10px; font-weight:700; padding:1px 7px; border-radius:10px; }
+  .main { padding:2rem; max-width:900px; }
+  .page { display:none; }
+  .page.active { display:block; }
+  .page-header { margin-bottom:1.75rem; }
+  .page-title { font-size:22px; font-weight:700; color:var(--navy); }
+  .page-desc { font-size:13px; color:var(--text-muted); margin-top:4px; }
+  .stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:1.75rem; }
+  .stat-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.1rem 1.25rem; }
+  .stat-num { font-size:28px; font-weight:700; color:var(--navy); line-height:1; }
+  .stat-label { font-size:11px; color:var(--text-muted); margin-top:4px; font-weight:500; }
+  .stat-card.accent { border-color:var(--pink-30); }
+  .stat-card.accent .stat-num { color:var(--pink); }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.5rem; margin-bottom:1.25rem; box-shadow:var(--shadow); }
+  .card-title { font-size:13px; font-weight:600; color:var(--text-muted); letter-spacing:0.5px; text-transform:uppercase; margin-bottom:1.1rem; }
+  .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .form-grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+  .field { margin-bottom:14px; }
+  .field:last-child { margin-bottom:0; }
+  .field label { display:block; font-size:12px; font-weight:600; color:var(--text-muted); margin-bottom:5px; }
+  .field input, .field select, .field textarea { width:100%; border:1.5px solid var(--border); border-radius:var(--radius-sm); padding:0.55rem 0.75rem; font-family:'Poppins',Arial,sans-serif; font-size:13px; color:var(--text); background:var(--bg); transition:border-color 0.15s; outline:none; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color:var(--pink); box-shadow:0 0 0 3px rgba(241,0,144,0.08); background:#fff; }
+  .field textarea { resize:vertical; min-height:60px; }
+  .pill-section-label { font-size:11px; font-weight:600; color:var(--text-light); letter-spacing:0.6px; text-transform:uppercase; margin-bottom:8px; }
+  .pill-group { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1rem; }
+  .pill { padding:5px 13px; border-radius:20px; font-size:12px; font-weight:500; cursor:pointer; border:1.5px solid var(--border); background:var(--bg); color:var(--text-muted); transition:all 0.15s; user-select:none; }
+  .pill:hover { border-color:var(--pink); color:var(--pink); background:var(--pink-10); }
+  .pill.selected { background:var(--pink-30); border-color:var(--pink); color:var(--navy); font-weight:600; }
+  .btn { display:inline-flex; align-items:center; gap:7px; padding:0.6rem 1.4rem; border-radius:var(--radius-sm); font-family:'Poppins',Arial,sans-serif; font-size:13px; font-weight:600; cursor:pointer; border:none; transition:all 0.15s; }
+  .btn-primary { background:var(--pink); color:#fff; }
+  .btn-primary:hover { background:#d4007e; }
+  .btn-primary:disabled { opacity:0.55; cursor:not-allowed; }
+  .btn-secondary { background:none; color:var(--pink); border:1.5px solid var(--pink); }
+  .btn-secondary:hover { background:var(--pink-10); }
+  .btn-ghost { background:none; color:var(--text-muted); border:1.5px solid var(--border); font-weight:500; }
+  .btn-ghost:hover { border-color:var(--text-muted); color:var(--text); }
+  .btn-sm { padding:0.4rem 0.9rem; font-size:12px; }
+  .btn-icon { background:none; border:none; cursor:pointer; color:var(--text-light); padding:4px; border-radius:6px; transition:all 0.15s; display:inline-flex; }
+  .btn-icon:hover { color:#E24B4A; background:#fce8e8; }
+  .day-group { margin-bottom:1.25rem; }
+  .day-heading { font-size:11px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:var(--text-light); margin-bottom:0.5rem; padding-left:2px; }
+  .session-row { display:flex; align-items:center; justify-content:space-between; padding:0.65rem 0.85rem; border-radius:var(--radius-sm); border:1px solid var(--border); background:var(--bg); margin-bottom:6px; gap:12px; }
+  .session-name { font-size:13px; font-weight:500; color:var(--text); }
+  .session-meta { font-size:11px; color:var(--text-muted); margin-top:1px; }
+  .joiner-card { border:1px solid var(--border); border-radius:var(--radius); padding:1rem 1.1rem; margin-bottom:10px; background:var(--surface); display:grid; grid-template-columns:44px 1fr auto; gap:12px; align-items:start; }
+  .avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,var(--pink-30),var(--purple-30)); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:var(--navy); flex-shrink:0; }
+  .joiner-name { font-size:14px; font-weight:600; color:var(--navy); }
+  .joiner-meta { font-size:12px; color:var(--text-muted); margin-top:2px; }
+  .session-tags { display:flex; flex-wrap:wrap; gap:4px; margin-top:7px; }
+  .session-tag { font-size:10px; padding:2px 8px; border-radius:8px; background:var(--bg); color:var(--text-muted); border:1px solid var(--border); }
+  .cycle-label { font-size:10px; font-weight:700; padding:2px 9px; border-radius:10px; background:var(--pink-30); color:var(--pink); margin-left:7px; vertical-align:middle; }
+  .cal-label { font-size:10px; font-weight:700; padding:2px 9px; border-radius:10px; background:#e6f4ea; color:#1e7e34; margin-left:5px; vertical-align:middle; }
+  .filter-bar { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1.1rem; }
+  .filter-chip { padding:4px 14px; border-radius:20px; font-size:12px; font-weight:500; cursor:pointer; border:1.5px solid var(--border); background:var(--bg); color:var(--text-muted); font-family:'Poppins',Arial,sans-serif; transition:all 0.15s; }
+  .filter-chip.active { background:var(--navy); border-color:var(--navy); color:#fff; }
+  .filter-chip:hover:not(.active) { border-color:var(--navy); color:var(--navy); }
+  .setup-banner { background:linear-gradient(135deg,var(--navy),var(--plum)); border-radius:var(--radius); padding:1.5rem 1.75rem; margin-bottom:1.5rem; color:#fff; display:flex; align-items:flex-start; gap:16px; }
+  .setup-banner-icon { width:40px; height:40px; border-radius:10px; background:rgba(241,0,144,0.25); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:20px; }
+  .setup-banner h3 { font-size:15px; font-weight:600; margin-bottom:4px; }
+  .setup-banner p { font-size:12px; opacity:0.7; line-height:1.6; }
+  .setup-url-field { margin-top:12px; display:flex; gap:8px; align-items:center; }
+  .setup-url-field input { flex:1; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:var(--radius-sm); padding:0.5rem 0.85rem; color:#fff; font-family:'Poppins',Arial,sans-serif; font-size:12px; outline:none; }
+  .setup-url-field input::placeholder { color:rgba(255,255,255,0.35); }
+  .setup-url-field input:focus { border-color:var(--pink); }
+  .toast { position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%); background:var(--navy); color:#fff; padding:0.65rem 1.5rem; border-radius:var(--radius-sm); font-size:13px; font-weight:500; box-shadow:var(--shadow-md); display:none; z-index:9999; white-space:nowrap; border-left:3px solid var(--pink); }
+  .toast.show { display:block; animation:slideUp 0.2s ease; }
+  @keyframes slideUp { from{opacity:0;transform:translateX(-50%) translateY(8px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
+  .empty { text-align:center; padding:3rem 1rem; color:var(--text-muted); }
+  .empty-icon { font-size:36px; margin-bottom:0.75rem; opacity:0.3; }
+  .empty-text { font-size:13px; }
+  .inline-form { background:var(--bg); border:1.5px dashed var(--border); border-radius:var(--radius-sm); padding:1rem; margin-bottom:1rem; display:none; }
+  .inline-form.open { display:block; }
+  .inline-form-grid { display:grid; grid-template-columns:1fr 1fr auto; gap:8px; align-items:end; }
+  .spinner { width:16px; height:16px; border:2px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.6s linear infinite; display:none; }
+  .spinner.show { display:inline-block; }
+  @keyframes spin { to{transform:rotate(360deg)} }
+  .icon { width:16px; height:16px; display:inline-block; vertical-align:-2px; }
 
-  body {
-    font-family: 'Poppins', Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    font-size: 14px;
-  }
+  /* SESSION SCHEDULING ROWS */
+  .sched-session-block { border:1px solid var(--border); border-radius:var(--radius-sm); padding:1rem; margin-bottom:10px; background:var(--bg); }
+  .sched-session-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.75rem; }
+  .sched-session-title { font-size:13px; font-weight:600; color:var(--navy); }
+  .sched-session-day { font-size:10px; font-weight:700; padding:2px 8px; border-radius:10px; background:var(--purple-30); color:var(--purple); }
+  .sched-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
 
-  /* HEADER */
-  .site-header {
-    background: var(--navy);
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 60px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .header-left { display: flex; align-items: center; gap: 14px; }
-  .logo-mark {
-    width: 32px; height: 32px; border-radius: 8px;
-    background: var(--pink);
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 16px; color: #fff; letter-spacing: -1px;
-  }
-  .header-title { color: #fff; font-size: 15px; font-weight: 600; }
-  .header-sub { color: rgba(255,255,255,0.45); font-size: 11px; }
-  .header-badge {
-    background: rgba(241,0,144,0.2);
-    border: 1px solid rgba(241,0,144,0.4);
-    color: var(--pink-30);
-    font-size: 11px; font-weight: 600;
-    padding: 3px 10px; border-radius: 20px; letter-spacing: 0.4px;
-  }
-  .accent-bar { height: 3px; background: linear-gradient(90deg, var(--pink), var(--purple)); }
+  /* STEP GUIDE */
+  .step-row { display:flex; gap:14px; margin-bottom:1.25rem; align-items:flex-start; }
+  .step-num { width:28px; height:28px; border-radius:50%; background:var(--pink); color:#fff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .step-title { font-weight:600; font-size:13px; margin-bottom:3px; }
+  .step-desc { font-size:12px; color:var(--text-muted); line-height:1.6; }
+  pre.code-block { background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-sm); padding:1rem; font-size:11px; line-height:1.6; overflow-x:auto; color:var(--text); font-family:monospace; white-space:pre-wrap; margin-top:8px; }
+  .code-wrap { position:relative; }
+  .copy-btn { position:absolute; top:8px; right:8px; }
 
-  /* LAYOUT */
-  .layout { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 63px); }
-
-  /* SIDEBAR */
-  .sidebar {
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    padding: 1.5rem 0;
-    position: sticky;
-    top: 63px;
-    height: calc(100vh - 63px);
-    overflow-y: auto;
-  }
-  .sidebar-section { padding: 0 1rem; margin-bottom: 1.5rem; }
-  .sidebar-label {
-    font-size: 10px; font-weight: 600; letter-spacing: 1px;
-    color: var(--text-light); text-transform: uppercase;
-    padding: 0 0.5rem; margin-bottom: 0.4rem;
-  }
-  .nav-item {
-    display: flex; align-items: center; gap: 10px;
-    padding: 0.55rem 0.75rem; border-radius: var(--radius-sm);
-    cursor: pointer; color: var(--text-muted);
-    font-size: 13px; font-weight: 500;
-    transition: all 0.15s; border: none; background: none;
-    width: 100%; text-align: left;
-  }
-  .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; }
-  .nav-item:hover { background: var(--pink-10); color: var(--text); }
-  .nav-item.active { background: var(--pink-10); color: var(--pink); font-weight: 600; }
-  .nav-item .badge {
-    margin-left: auto; background: var(--pink-30);
-    color: var(--pink); font-size: 10px; font-weight: 700;
-    padding: 1px 7px; border-radius: 10px;
-  }
-
-  /* MAIN */
-  .main { padding: 2rem; max-width: 860px; }
-  .page { display: none; }
-  .page.active { display: block; }
-
-  .page-header { margin-bottom: 1.75rem; }
-  .page-title { font-size: 22px; font-weight: 700; color: var(--navy); line-height: 1.2; }
-  .page-desc { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
-
-  /* STATS */
-  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 1.75rem; }
-  .stat-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 1.1rem 1.25rem;
-  }
-  .stat-num { font-size: 28px; font-weight: 700; color: var(--navy); line-height: 1; }
-  .stat-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
-  .stat-card.accent { border-color: var(--pink-30); }
-  .stat-card.accent .stat-num { color: var(--pink); }
-
-  /* CARDS */
-  .card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 1.5rem;
-    margin-bottom: 1.25rem; box-shadow: var(--shadow);
-  }
-  .card-title {
-    font-size: 13px; font-weight: 600; color: var(--text-muted);
-    letter-spacing: 0.5px; text-transform: uppercase;
-    margin-bottom: 1.1rem;
-  }
-
-  /* FORM */
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
-  .field { margin-bottom: 14px; }
-  .field:last-child { margin-bottom: 0; }
-  .field label {
-    display: block; font-size: 12px; font-weight: 600;
-    color: var(--text-muted); margin-bottom: 5px; letter-spacing: 0.2px;
-  }
-  .field input, .field select, .field textarea {
-    width: 100%; border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm); padding: 0.55rem 0.75rem;
-    font-family: 'Poppins', Arial, sans-serif; font-size: 13px;
-    color: var(--text); background: var(--bg);
-    transition: border-color 0.15s, box-shadow 0.15s; outline: none;
-  }
-  .field input:focus, .field select:focus, .field textarea:focus {
-    border-color: var(--pink); box-shadow: 0 0 0 3px rgba(241,0,144,0.08);
-    background: #fff;
-  }
-  .field textarea { resize: vertical; min-height: 70px; }
-
-  /* PILLS */
-  .pill-section-label {
-    font-size: 11px; font-weight: 600; color: var(--text-light);
-    letter-spacing: 0.6px; text-transform: uppercase; margin-bottom: 8px;
-  }
-  .pill-group { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
-  .pill {
-    padding: 5px 13px; border-radius: 20px; font-size: 12px; font-weight: 500;
-    cursor: pointer; border: 1.5px solid var(--border);
-    background: var(--bg); color: var(--text-muted);
-    transition: all 0.15s; user-select: none; line-height: 1.4;
-  }
-  .pill .day-tag { font-size: 10px; opacity: 0.6; margin-right: 3px; }
-  .pill:hover { border-color: var(--pink); color: var(--pink); background: var(--pink-10); }
-  .pill.selected { background: var(--pink-30); border-color: var(--pink); color: var(--navy); font-weight: 600; }
-
-  /* BUTTONS */
-  .btn {
-    display: inline-flex; align-items: center; gap: 7px;
-    padding: 0.6rem 1.4rem; border-radius: var(--radius-sm);
-    font-family: 'Poppins', Arial, sans-serif; font-size: 13px;
-    font-weight: 600; cursor: pointer; border: none;
-    transition: all 0.15s; text-decoration: none;
-  }
-  .btn-primary { background: var(--pink); color: #fff; }
-  .btn-primary:hover { background: #d4007e; }
-  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; }
-  .btn-secondary {
-    background: none; color: var(--pink);
-    border: 1.5px solid var(--pink);
-  }
-  .btn-secondary:hover { background: var(--pink-10); }
-  .btn-ghost {
-    background: none; color: var(--text-muted);
-    border: 1.5px solid var(--border); font-weight: 500;
-  }
-  .btn-ghost:hover { border-color: var(--text-muted); color: var(--text); }
-  .btn-sm { padding: 0.4rem 0.9rem; font-size: 12px; }
-  .btn-icon {
-    background: none; border: none; cursor: pointer;
-    color: var(--text-light); padding: 4px; border-radius: 6px;
-    transition: all 0.15s; display: inline-flex;
-  }
-  .btn-icon:hover { color: #E24B4A; background: #fce8e8; }
-
-  /* SESSION LIST */
-  .day-group { margin-bottom: 1.25rem; }
-  .day-heading {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.8px;
-    text-transform: uppercase; color: var(--text-light);
-    margin-bottom: 0.5rem; padding-left: 2px;
-  }
-  .session-row {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0.65rem 0.85rem; border-radius: var(--radius-sm);
-    border: 1px solid var(--border); background: var(--bg);
-    margin-bottom: 6px; gap: 12px;
-  }
-  .session-name { font-size: 13px; font-weight: 500; color: var(--text); }
-  .session-meta { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
-
-  /* CYCLE CHIPS */
-  .cycle-chip {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 4px 12px; border-radius: 20px;
-    background: var(--purple-30); color: var(--purple);
-    font-size: 11px; font-weight: 600; margin: 0 4px 4px 0;
-  }
-
-  /* JOINER LOG */
-  .joiner-card {
-    border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 1rem 1.1rem; margin-bottom: 10px;
-    background: var(--surface);
-    display: grid; grid-template-columns: 44px 1fr auto;
-    gap: 12px; align-items: start;
-  }
-  .avatar {
-    width: 44px; height: 44px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--pink-30), var(--purple-30));
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; font-weight: 700; color: var(--navy); flex-shrink: 0;
-  }
-  .joiner-name { font-size: 14px; font-weight: 600; color: var(--navy); }
-  .joiner-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-  .session-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; }
-  .session-tag {
-    font-size: 10px; padding: 2px 8px; border-radius: 8px;
-    background: var(--bg); color: var(--text-muted);
-    border: 1px solid var(--border);
-  }
-  .cycle-label {
-    font-size: 10px; font-weight: 700; padding: 2px 9px; border-radius: 10px;
-    background: var(--pink-30); color: var(--pink);
-    margin-left: 7px; vertical-align: middle;
-  }
-
-  /* FILTER BAR */
-  .filter-bar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.1rem; }
-  .filter-chip {
-    padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
-    cursor: pointer; border: 1.5px solid var(--border);
-    background: var(--bg); color: var(--text-muted);
-    font-family: 'Poppins', Arial, sans-serif; transition: all 0.15s;
-  }
-  .filter-chip.active { background: var(--navy); border-color: var(--navy); color: #fff; }
-  .filter-chip:hover:not(.active) { border-color: var(--navy); color: var(--navy); }
-
-  /* SETUP BANNER */
-  .setup-banner {
-    background: linear-gradient(135deg, var(--navy), var(--plum));
-    border-radius: var(--radius); padding: 1.5rem 1.75rem;
-    margin-bottom: 1.5rem; color: #fff;
-    display: flex; align-items: flex-start; gap: 16px;
-  }
-  .setup-banner-icon {
-    width: 40px; height: 40px; border-radius: 10px;
-    background: rgba(241,0,144,0.25); flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center; font-size: 20px;
-  }
-  .setup-banner h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-  .setup-banner p { font-size: 12px; opacity: 0.7; line-height: 1.6; }
-  .setup-url-field {
-    margin-top: 12px; display: flex; gap: 8px; align-items: center;
-  }
-  .setup-url-field input {
-    flex: 1; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-    border-radius: var(--radius-sm); padding: 0.5rem 0.85rem;
-    color: #fff; font-family: 'Poppins', Arial, sans-serif; font-size: 12px;
-    outline: none;
-  }
-  .setup-url-field input::placeholder { color: rgba(255,255,255,0.35); }
-  .setup-url-field input:focus { border-color: var(--pink); }
-
-  /* TOAST */
-  .toast {
-    position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-    background: var(--navy); color: #fff;
-    padding: 0.65rem 1.5rem; border-radius: var(--radius-sm);
-    font-size: 13px; font-weight: 500; box-shadow: var(--shadow-md);
-    display: none; z-index: 9999; white-space: nowrap;
-    border-left: 3px solid var(--pink);
-  }
-  .toast.show { display: block; animation: slideUp 0.2s ease; }
-  @keyframes slideUp { from { opacity:0; transform: translateX(-50%) translateY(8px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
-
-  /* EMPTY */
-  .empty {
-    text-align: center; padding: 3rem 1rem;
-    color: var(--text-muted);
-  }
-  .empty-icon { font-size: 36px; margin-bottom: 0.75rem; opacity: 0.3; }
-  .empty-text { font-size: 13px; }
-
-  /* INLINE ADD FORM */
-  .inline-form {
-    background: var(--bg); border: 1.5px dashed var(--border);
-    border-radius: var(--radius-sm); padding: 1rem;
-    margin-bottom: 1rem; display: none;
-  }
-  .inline-form.open { display: block; }
-  .inline-form-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; align-items: end; }
-
-  /* SPINNER */
-  .spinner {
-    width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3);
-    border-top-color: #fff; border-radius: 50%;
-    animation: spin 0.6s linear infinite; display: none;
-  }
-  .spinner.show { display: inline-block; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* SVG ICONS */
-  .icon { width: 16px; height: 16px; display: inline-block; vertical-align: -2px; }
-
-  /* RESPONSIVE */
-  @media (max-width: 700px) {
-    .layout { grid-template-columns: 1fr; }
-    .sidebar { display: none; }
-    .main { padding: 1rem; }
-    .stats-grid { grid-template-columns: 1fr 1fr; }
-    .form-grid, .form-grid-3 { grid-template-columns: 1fr; }
-  }
+  @media(max-width:700px){.layout{grid-template-columns:1fr}.sidebar{display:none}.main{padding:1rem}.stats-grid{grid-template-columns:1fr 1fr}.form-grid,.form-grid-3,.sched-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -383,17 +169,18 @@
 
   <main class="main">
 
-    <!-- ADD JOINER PAGE -->
+    <!-- ADD JOINER -->
     <div id="page-add" class="page active">
       <div class="page-header">
         <div class="page-title">Register new joiner</div>
-        <div class="page-desc">Add a new employee and assign them to onboarding sessions</div>
+        <div class="page-desc">Add a new employee, assign sessions, and create calendar invites automatically</div>
       </div>
       <div class="stats-grid">
         <div class="stat-card accent"><div class="stat-num" id="stat-total">0</div><div class="stat-label">Total joiners</div></div>
         <div class="stat-card"><div class="stat-num" id="stat-month">0</div><div class="stat-label">This month</div></div>
         <div class="stat-card"><div class="stat-num" id="stat-cycles">0</div><div class="stat-label">Cycles defined</div></div>
       </div>
+
       <div class="card">
         <div class="card-title">Joiner details</div>
         <div class="form-grid">
@@ -404,19 +191,25 @@
         </div>
         <div class="field"><label>Team / department</label><input type="text" id="nj-team" placeholder="Engineering, P&C, Sales…"></div>
       </div>
+
       <div class="card">
         <div class="card-title">Onboarding cycle</div>
         <div id="cycle-picker" class="pill-group"></div>
       </div>
+
       <div class="card">
-        <div class="card-title">Assign sessions</div>
+        <div class="card-title">Assign sessions &amp; schedule</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:1rem;line-height:1.6;">
+          Select sessions to assign. For each selected session, set the date, time, and confirm the presenter email — calendar invites will be sent automatically to the joiner, presenter, and your P&C team.
+        </div>
         <div id="day-session-pickers"></div>
       </div>
+
       <div class="field"><label>Notes (optional)</label><textarea id="nj-notes" placeholder="Anything useful for the onboarding specialists…"></textarea></div>
       <button class="btn btn-primary" id="submit-btn" onclick="submitJoiner()">
         <span id="submit-spinner" class="spinner"></span>
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Register joiner
+        Register &amp; create calendar invites
       </button>
     </div>
 
@@ -426,7 +219,6 @@
         <div class="page-title">Sessions &amp; cycles</div>
         <div class="page-desc">Manage the session catalogue and onboarding cycle schedule</div>
       </div>
-
       <div class="card">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
           <div class="card-title" style="margin:0">Session catalogue</div>
@@ -438,7 +230,11 @@
         <div class="inline-form" id="add-session-panel">
           <div class="form-grid" style="margin-bottom:8px">
             <div class="field" style="margin:0"><label>Session name *</label><input type="text" id="s-name" placeholder="Ataccama Product"></div>
-            <div class="field" style="margin:0"><label>Presenter</label><input type="text" id="s-presenter" placeholder="Petr Záček"></div>
+            <div class="field" style="margin:0"><label>Default presenter name</label><input type="text" id="s-presenter" placeholder="Petr Záček"></div>
+          </div>
+          <div class="form-grid" style="margin-bottom:8px">
+            <div class="field" style="margin:0"><label>Default presenter email</label><input type="email" id="s-presenter-email" placeholder="petr.zacek@ataccama.com"></div>
+            <div class="field" style="margin:0"><label>Duration</label><input type="text" id="s-duration" placeholder="1h 30min"></div>
           </div>
           <div class="inline-form-grid">
             <div class="field" style="margin:0"><label>Day</label>
@@ -446,7 +242,7 @@
                 <option>Day 1</option><option>Day 2</option><option>Day 3</option><option>Day 4</option><option>Day 5</option>
               </select>
             </div>
-            <div class="field" style="margin:0"><label>Duration</label><input type="text" id="s-duration" placeholder="1h 30min"></div>
+            <div class="field" style="margin:0"><label>Default start time (CET)</label><input type="time" id="s-time" value="09:00"></div>
             <button class="btn btn-primary btn-sm" onclick="saveSession()" style="margin-bottom:0;padding:0.4rem 1rem">Save</button>
           </div>
         </div>
@@ -470,6 +266,17 @@
         </div>
         <div id="cycle-list"></div>
       </div>
+
+      <div class="card">
+        <div class="card-title">P&amp;C team — always invited</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:1rem;line-height:1.6;">These people are added to every calendar invite automatically. Add all P&C team members who should always be included.</div>
+        <div id="pc-team-list" style="margin-bottom:1rem"></div>
+        <div class="inline-form-grid" style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px">
+          <div class="field" style="margin:0"><label>Name</label><input type="text" id="pc-name" placeholder="Ana Novák"></div>
+          <div class="field" style="margin:0"><label>Email</label><input type="email" id="pc-email" placeholder="ana.novak@ataccama.com"></div>
+          <button class="btn btn-primary btn-sm" onclick="addPCMember()" style="margin-bottom:0;padding:0.4rem 1rem">Add</button>
+        </div>
+      </div>
     </div>
 
     <!-- LOG PAGE -->
@@ -491,13 +298,14 @@
     <div id="page-setup" class="page">
       <div class="page-header">
         <div class="page-title">Setup</div>
-        <div class="page-desc">Connect this tool to Google Sheets so data is shared across your team</div>
+        <div class="page-desc">Connect to Google Sheets (logging) and Google Calendar (invites) via one Apps Script</div>
       </div>
+
       <div class="setup-banner">
-        <div class="setup-banner-icon">📋</div>
+        <div class="setup-banner-icon">🔗</div>
         <div style="flex:1">
-          <h3>Connect to Google Sheets</h3>
-          <p>Paste your Google Apps Script Web App URL below. Every new joiner registered will be automatically saved to your shared Google Sheet. Follow the setup guide below to get your URL.</p>
+          <h3>Apps Script Web App URL</h3>
+          <p>One script handles both saving to Google Sheets and creating Google Calendar invites. Follow the guide below to get your URL, then paste it here.</p>
           <div class="setup-url-field">
             <input type="url" id="sheets-url" placeholder="https://script.google.com/macros/s/…/exec" oninput="saveScriptUrl()">
             <button class="btn btn-primary btn-sm" onclick="testConnection()">Test connection</button>
@@ -509,50 +317,80 @@
       <div class="card">
         <div class="card-title">Step-by-step setup guide</div>
 
-        <div style="counter-reset:steps">
-
-          <div style="display:flex;gap:14px;margin-bottom:1.25rem;align-items:flex-start">
-            <div style="width:28px;height:28px;border-radius:50%;background:var(--pink);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
-            <div>
-              <div style="font-weight:600;font-size:13px;margin-bottom:3px">Create a new Google Sheet</div>
-              <div style="font-size:12px;color:var(--text-muted);line-height:1.6">Go to <a href="https://sheets.google.com" target="_blank" style="color:var(--pink)">sheets.google.com</a> → click <strong>Blank</strong> → name it <em>Ataccama Onboarding</em>. You'll need two tabs: rename Sheet1 to <strong>Joiners</strong> and create a second tab called <strong>Sessions</strong>.</div>
-            </div>
+        <div class="step-row">
+          <div class="step-num">1</div>
+          <div>
+            <div class="step-title">Create a new Google Sheet</div>
+            <div class="step-desc">Go to <a href="https://sheets.google.com" target="_blank" style="color:var(--pink)">sheets.google.com</a> → click <strong>Blank</strong> → name it <em>Ataccama Onboarding</em>. Rename the first tab to <strong>Joiners</strong>.</div>
           </div>
+        </div>
 
-          <div style="display:flex;gap:14px;margin-bottom:1.25rem;align-items:flex-start">
-            <div style="width:28px;height:28px;border-radius:50%;background:var(--pink);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
-            <div>
-              <div style="font-weight:600;font-size:13px;margin-bottom:3px">Open Apps Script</div>
-              <div style="font-size:12px;color:var(--text-muted);line-height:1.6">In your Google Sheet, click <strong>Extensions → Apps Script</strong>. A new tab opens with a code editor.</div>
-            </div>
+        <div class="step-row">
+          <div class="step-num">2</div>
+          <div>
+            <div class="step-title">Open Apps Script</div>
+            <div class="step-desc">In your Google Sheet, click <strong>Extensions → Apps Script</strong>. A new tab opens with a code editor.</div>
           </div>
+        </div>
 
-          <div style="display:flex;gap:14px;margin-bottom:1.25rem;align-items:flex-start">
-            <div style="width:28px;height:28px;border-radius:50%;background:var(--pink);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div>
-            <div>
-              <div style="font-weight:600;font-size:13px;margin-bottom:3px">Paste the script</div>
-              <div style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:8px">Delete everything in the editor and paste this script:</div>
-              <div style="position:relative">
-                <pre id="script-code" style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;font-size:11px;line-height:1.6;overflow-x:auto;color:var(--text);font-family:monospace;white-space:pre-wrap">function doPost(e) {
+        <div class="step-row">
+          <div class="step-num">3</div>
+          <div>
+            <div class="step-title">Paste the script</div>
+            <div class="step-desc">Delete everything in the editor and paste this script. It handles both Sheets logging and Calendar invite creation.</div>
+            <div class="code-wrap">
+              <pre class="code-block" id="script-code">function doPost(e) {
   try {
     var p = e.parameter;
+
+    // 1. Save to Google Sheets
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = ss.getSheetByName('Joiners');
     if (!sheet) sheet = ss.insertSheet('Joiners');
-
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow([
-        'Timestamp','Name','Email','Start Date',
-        'Team','Cycle','Sessions','Notes'
-      ]);
-      sheet.getRange(1,1,1,8).setFontWeight('bold')
-           .setBackground('#1A0C42').setFontColor('#ffffff');
+      sheet.appendRow(['Timestamp','Name','Email','Start Date','Team','Cycle','Sessions','Notes','Calendar Events']);
+      sheet.getRange(1,1,1,9).setFontWeight('bold').setBackground('#1A0C42').setFontColor('#ffffff');
     }
+
+    // 2. Create Google Calendar invites
+    var sessions = JSON.parse(p.sessions);
+    var calendarLinks = [];
+
+    sessions.forEach(function(s) {
+      if (!s.date || !s.startTime) return;
+
+      var startDT = new Date(s.date + 'T' + s.startTime + ':00');
+      var endDT   = new Date(s.date + 'T' + s.endTime   + ':00');
+
+      var attendees = [{ email: p.joinerEmail }];
+      if (s.presenterEmail) attendees.push({ email: s.presenterEmail });
+
+      var pcTeam = JSON.parse(p.pcTeam || '[]');
+      pcTeam.forEach(function(m) { attendees.push({ email: m.email }); });
+
+      var event = CalendarApp.getDefaultCalendar().createEvent(
+        s.name + ' — Onboarding: ' + p.joinerName,
+        startDT, endDT,
+        {
+          description: 'Onboarding session for ' + p.joinerName +
+            '\nTeam: ' + p.team +
+            '\nCycle: ' + p.cycle +
+            (s.presenterName ? '\nPresenter: ' + s.presenterName : '') +
+            (p.notes ? '\n\nNotes: ' + p.notes : ''),
+          guests: attendees.map(function(a){ return a.email; }).join(','),
+          sendInvites: true
+        }
+      );
+      calendarLinks.push(s.name + ': ' + event.getId());
+    });
 
     sheet.appendRow([
       new Date().toLocaleString(),
-      p.name, p.email, p.startDate,
-      p.team, p.cycle, p.sessions, p.notes
+      p.joinerName, p.joinerEmail, p.startDate,
+      p.team, p.cycle,
+      sessions.map(function(s){ return s.name; }).join(', '),
+      p.notes,
+      calendarLinks.join(' | ')
     ]);
 
     return ContentService
@@ -571,86 +409,72 @@ function doGet(e) {
     .createTextOutput('Ataccama Onboarding API running')
     .setMimeType(ContentService.MimeType.TEXT);
 }</pre>
-                <button class="btn btn-ghost btn-sm" onclick="copyScript()" style="position:absolute;top:8px;right:8px">
-                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                  Copy
-                </button>
-              </div>
+              <button class="btn btn-ghost btn-sm copy-btn" onclick="copyScript()">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Copy
+              </button>
             </div>
           </div>
-
-          <div style="display:flex;gap:14px;margin-bottom:1.25rem;align-items:flex-start">
-            <div style="width:28px;height:28px;border-radius:50%;background:var(--pink);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">4</div>
-            <div>
-              <div style="font-weight:600;font-size:13px;margin-bottom:3px">Deploy as Web App</div>
-              <div style="font-size:12px;color:var(--text-muted);line-height:1.6">Click <strong>Deploy → New deployment</strong>. Set type to <strong>Web app</strong>. Under <em>Execute as</em> choose <strong>Me</strong>. Under <em>Who has access</em> choose <strong>Anyone</strong>. Click <strong>Deploy</strong>, authorise when prompted, then copy the Web App URL.</div>
-            </div>
-          </div>
-
-          <div style="display:flex;gap:14px;align-items:flex-start">
-            <div style="width:28px;height:28px;border-radius:50%;background:var(--pink);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">5</div>
-            <div>
-              <div style="font-weight:600;font-size:13px;margin-bottom:3px">Paste the URL above and test</div>
-              <div style="font-size:12px;color:var(--text-muted);line-height:1.6">Paste your Web App URL in the field at the top of this page and click <strong>Test connection</strong>. If it says ✓ Connected — you're done!</div>
-            </div>
-          </div>
-
         </div>
+
+        <div class="step-row">
+          <div class="step-num">4</div>
+          <div>
+            <div class="step-title">Deploy as Web App</div>
+            <div class="step-desc">Click <strong>Deploy → New deployment</strong>. Set type to <strong>Web app</strong>. Under <em>Execute as</em> choose <strong>Me</strong>. Under <em>Who has access</em> choose <strong>Anyone within Ataccama</strong>. Click <strong>Deploy</strong> and authorise when prompted — <strong>make sure to tick Google Calendar access</strong> when it asks. Copy the Web App URL.</div>
+          </div>
+        </div>
+
+        <div class="step-row" style="margin-bottom:0">
+          <div class="step-num">5</div>
+          <div>
+            <div class="step-title">Paste the URL above and test</div>
+            <div class="step-desc">Paste your Web App URL in the field at the top of this page and click <strong>Test connection</strong>. Then go to <strong>Sessions tab</strong> and add your P&C team members so they get invited to every session automatically.</div>
+          </div>
+        </div>
+
       </div>
     </div>
 
   </main>
 </div>
-
 <div class="toast" id="toast"></div>
 
 <script>
-// ─── DEFAULT DATA ───────────────────────────────────────────────────────────
 const DEFAULT_SESSIONS = [
-  {id:'s1', name:'IT Intro EMEA', presenter:'IT Crowd', day:'Day 1', duration:'1h'},
-  {id:'s2', name:'P&C Onboarding EMEA', presenter:'Onboarding Specialists', day:'Day 1', duration:'3h'},
-  {id:'s3', name:'IT Intro NA', presenter:'IT Crowd', day:'Day 1', duration:'1h'},
-  {id:'s4', name:'P&C Onboarding NA', presenter:'Onboarding Specialists', day:'Day 1', duration:'3h'},
-  {id:'s5', name:'Ataccama Product', presenter:'Petr Záček', day:'Day 2', duration:'1.5h'},
-  {id:'s6', name:'Ataccama Customers', presenter:'Rebecca Lane', day:'Day 2', duration:'1h'},
-  {id:'s7', name:'Ataccama ONE Positioning GTM', presenter:'Katarína Fialková', day:'Day 3', duration:'1h'},
-  {id:'s8', name:'Information Security & Data Privacy', presenter:'Jitka Preusslerová / Anastasija Perunova', day:'Day 3', duration:'2h'},
-  {id:'s9', name:'Ataccama Data', presenter:'Vojta Pasler', day:'Day 4', duration:'30min'},
-  {id:'s10', name:'We Are Ataccama!', presenter:'Júlia Losekoot', day:'Day 5', duration:'1h'},
-  {id:'s11', name:'QA Wrap-up session', presenter:'', day:'Day 5', duration:'1h'},
+  {id:'s1',  name:'IT Intro EMEA',                    presenter:'IT Crowd',                                          presenterEmail:'', day:'Day 1', duration:'1h',    defaultTime:'08:30', defaultEndTime:'09:30'},
+  {id:'s2',  name:'P&C Onboarding EMEA',              presenter:'Onboarding Specialists',                            presenterEmail:'', day:'Day 1', duration:'3h',    defaultTime:'09:30', defaultEndTime:'12:30'},
+  {id:'s3',  name:'IT Intro NA',                      presenter:'IT Crowd',                                          presenterEmail:'', day:'Day 1', duration:'1h',    defaultTime:'09:30', defaultEndTime:'10:30'},
+  {id:'s4',  name:'P&C Onboarding NA',                presenter:'Onboarding Specialists',                            presenterEmail:'', day:'Day 1', duration:'3h',    defaultTime:'10:30', defaultEndTime:'13:30'},
+  {id:'s5',  name:'Ataccama Product',                 presenter:'Petr Záček',                                        presenterEmail:'', day:'Day 2', duration:'1.5h',  defaultTime:'09:00', defaultEndTime:'10:30'},
+  {id:'s6',  name:'Ataccama Customers',               presenter:'Rebecca Lane',                                      presenterEmail:'', day:'Day 2', duration:'1h',    defaultTime:'10:30', defaultEndTime:'11:30'},
+  {id:'s7',  name:'Ataccama ONE Positioning GTM',     presenter:'Katarína Fialková',                                 presenterEmail:'', day:'Day 3', duration:'1h',    defaultTime:'08:00', defaultEndTime:'09:00'},
+  {id:'s8',  name:'Information Security & Data Privacy', presenter:'Jitka Preusslerová / Anastasija Perunova',       presenterEmail:'', day:'Day 3', duration:'2h',    defaultTime:'09:00', defaultEndTime:'11:00'},
+  {id:'s9',  name:'Ataccama Data',                    presenter:'Vojta Pasler',                                      presenterEmail:'', day:'Day 4', duration:'30min', defaultTime:'09:00', defaultEndTime:'09:30'},
+  {id:'s10', name:'We Are Ataccama!',                 presenter:'Júlia Losekoot',                                    presenterEmail:'', day:'Day 5', duration:'1h',    defaultTime:'08:30', defaultEndTime:'09:30'},
+  {id:'s11', name:'QA Wrap-up session',               presenter:'',                                                  presenterEmail:'', day:'Day 5', duration:'1h',    defaultTime:'09:30', defaultEndTime:'10:30'},
 ];
 
-// ─── STATE ───────────────────────────────────────────────────────────────────
-let state = { sessions: [], cycles: [], joiners: [] };
+let state = { sessions:[], cycles:[], joiners:[], pcTeam:[] };
 let selectedSessions = [];
+let sessionSchedule = {};  // { sessionId: { date, startTime, endTime, presenterEmail, presenterName } }
 let selectedCycle = '';
 let logFilter = 'all';
 let scriptUrl = '';
 
-// ─── INIT ────────────────────────────────────────────────────────────────────
 function init() {
   const saved = localStorage.getItem('ata-onboarding');
-  if (saved) {
-    state = JSON.parse(saved);
-  } else {
-    state = { sessions: [...DEFAULT_SESSIONS], cycles: [], joiners: [] };
-    save();
-  }
+  if (saved) { state = JSON.parse(saved); }
+  else { state = { sessions:[...DEFAULT_SESSIONS], cycles:[], joiners:[], pcTeam:[] }; save(); }
+  if (!state.pcTeam) state.pcTeam = [];
   scriptUrl = localStorage.getItem('ata-script-url') || '';
   if (scriptUrl) document.getElementById('sheets-url').value = scriptUrl;
   render();
 }
 
-function save() {
-  localStorage.setItem('ata-onboarding', JSON.stringify(state));
-}
+function save() { localStorage.setItem('ata-onboarding', JSON.stringify(state)); }
+function saveScriptUrl() { scriptUrl = document.getElementById('sheets-url').value.trim(); localStorage.setItem('ata-script-url', scriptUrl); }
 
-function saveScriptUrl() {
-  scriptUrl = document.getElementById('sheets-url').value.trim();
-  localStorage.setItem('ata-script-url', scriptUrl);
-}
-
-// ─── NAV ─────────────────────────────────────────────────────────────────────
 function switchPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -660,26 +484,17 @@ function switchPage(name) {
   render();
 }
 
-// ─── RENDER ──────────────────────────────────────────────────────────────────
 function render() {
-  renderStats();
-  renderSessionPicker();
-  renderCyclePicker();
-  renderSessionList();
-  renderCycleList();
-  renderJoinerList();
-  renderLogFilter();
-  renderLogStats();
+  renderStats(); renderSessionPicker(); renderCyclePicker();
+  renderSessionList(); renderCycleList(); renderPCTeam();
+  renderJoinerList(); renderLogFilter(); renderLogStats();
   document.getElementById('nav-badge').textContent = state.joiners.length;
 }
 
 function renderStats() {
   const total = state.joiners.length;
   const now = new Date();
-  const month = state.joiners.filter(j => {
-    const d = new Date(j.addedAt);
-    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
-  }).length;
+  const month = state.joiners.filter(j => { const d=new Date(j.addedAt); return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear(); }).length;
   document.getElementById('stat-total').textContent = total;
   document.getElementById('stat-month').textContent = month;
   document.getElementById('stat-cycles').textContent = state.cycles.length;
@@ -687,7 +502,7 @@ function renderStats() {
 
 function renderLogStats() {
   document.getElementById('log-stat-total').textContent = state.joiners.length;
-  document.getElementById('log-stat-assignments').textContent = state.joiners.reduce((a,j) => a + (j.sessions||[]).length, 0);
+  document.getElementById('log-stat-assignments').textContent = state.joiners.reduce((a,j)=>a+(j.sessions||[]).length,0);
   document.getElementById('log-stat-cycles').textContent = new Set(state.joiners.map(j=>j.cycle).filter(Boolean)).size;
 }
 
@@ -698,277 +513,300 @@ function renderSessionPicker() {
   container.innerHTML = days.map(day => {
     const sessions = state.sessions.filter(s => s.day === day);
     if (!sessions.length) return '';
-    return `<div style="margin-bottom:.85rem">
-      <div class="pill-section-label">${day}</div>
-      <div class="pill-group">${sessions.map(s =>
+    return `<div style="margin-bottom:1rem">
+      <div class="pill-section-label">${day} — select sessions</div>
+      <div class="pill-group" style="margin-bottom:0.5rem">${sessions.map(s =>
         `<span class="pill${selectedSessions.includes(s.id)?' selected':''}" onclick="toggleSession('${s.id}')">
-          ${s.name}${s.presenter?` <span style="opacity:.55;font-size:10px">· ${s.presenter}</span>`:''}
-        </span>`
-      ).join('')}</div>
+          ${s.name}${s.presenter?` <span style="opacity:.5;font-size:10px">· ${s.presenter}</span>`:''}
+        </span>`).join('')}
+      </div>
+      ${selectedSessions.some(id => sessions.find(s=>s.id===id)) ? sessions.filter(s=>selectedSessions.includes(s.id)).map(s => renderSchedBlock(s)).join('') : ''}
     </div>`;
   }).join('');
 }
 
+function renderSchedBlock(s) {
+  const sc = sessionSchedule[s.id] || {};
+  return `<div class="sched-session-block">
+    <div class="sched-session-header">
+      <div class="sched-session-title">${s.name}</div>
+      <span class="sched-session-day">${s.day}</span>
+    </div>
+    <div class="sched-grid">
+      <div class="field" style="margin:0"><label>Date *</label>
+        <input type="date" value="${sc.date||''}" onchange="updateSchedule('${s.id}','date',this.value)">
+      </div>
+      <div class="field" style="margin:0"><label>Start time (CET)</label>
+        <input type="time" value="${sc.startTime||s.defaultTime||'09:00'}" onchange="updateSchedule('${s.id}','startTime',this.value)">
+      </div>
+      <div class="field" style="margin:0"><label>End time (CET)</label>
+        <input type="time" value="${sc.endTime||s.defaultEndTime||'10:00'}" onchange="updateSchedule('${s.id}','endTime',this.value)">
+      </div>
+      <div class="field" style="margin:0;grid-column:1/-1"><label>Presenter email (for this session)</label>
+        <input type="email" value="${sc.presenterEmail||s.presenterEmail||''}" placeholder="${s.presenter ? s.presenter+'@ataccama.com' : 'presenter@ataccama.com'}" onchange="updateSchedule('${s.id}','presenterEmail',this.value)">
+      </div>
+    </div>
+  </div>`;
+}
+
+function updateSchedule(id, field, value) {
+  if (!sessionSchedule[id]) sessionSchedule[id] = {};
+  sessionSchedule[id][field] = value;
+}
+
 function toggleSession(id) {
-  if (selectedSessions.includes(id)) selectedSessions = selectedSessions.filter(x => x !== id);
-  else selectedSessions.push(id);
+  if (selectedSessions.includes(id)) {
+    selectedSessions = selectedSessions.filter(x => x !== id);
+    delete sessionSchedule[id];
+  } else {
+    selectedSessions.push(id);
+    const s = state.sessions.find(x => x.id === id);
+    if (s) sessionSchedule[id] = { startTime: s.defaultTime||'09:00', endTime: s.defaultEndTime||'10:00', presenterEmail: s.presenterEmail||'' };
+  }
   renderSessionPicker();
 }
 
 function renderCyclePicker() {
   const el = document.getElementById('cycle-picker');
   if (!el) return;
-  if (!state.cycles.length) {
-    el.innerHTML = '<span style="font-size:12px;color:var(--text-muted)">No cycles yet — add them in the Sessions tab first</span>';
-    return;
-  }
-  el.innerHTML = state.cycles.map(c =>
-    `<span class="pill${selectedCycle===c.id?' selected':''}" onclick="selectCycle('${c.id}')">${c.name}</span>`
-  ).join('');
+  if (!state.cycles.length) { el.innerHTML='<span style="font-size:12px;color:var(--text-muted)">No cycles yet — add them in the Sessions tab</span>'; return; }
+  el.innerHTML = state.cycles.map(c => `<span class="pill${selectedCycle===c.id?' selected':''}" onclick="selectCycle('${c.id}')">${c.name}</span>`).join('');
 }
 
-function selectCycle(id) {
-  selectedCycle = selectedCycle === id ? '' : id;
-  renderCyclePicker();
-}
+function selectCycle(id) { selectedCycle = selectedCycle===id?'':id; renderCyclePicker(); }
 
 function renderSessionList() {
   const el = document.getElementById('session-list');
   if (!el) return;
   const days = ['Day 1','Day 2','Day 3','Day 4','Day 5'];
   el.innerHTML = days.map(day => {
-    const sessions = state.sessions.filter(s => s.day === day);
+    const sessions = state.sessions.filter(s=>s.day===day);
     if (!sessions.length) return '';
-    return `<div class="day-group">
-      <div class="day-heading">${day}</div>
-      ${sessions.map(s => `
-        <div class="session-row">
-          <div>
-            <div class="session-name">${s.name}</div>
-            <div class="session-meta">${s.presenter ? s.presenter + ' · ' : ''}${s.duration}</div>
-          </div>
-          <button class="btn-icon" onclick="deleteSession('${s.id}')" title="Remove">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
-          </button>
-        </div>`).join('')}
-    </div>`;
+    return `<div class="day-group"><div class="day-heading">${day}</div>${sessions.map(s=>`
+      <div class="session-row">
+        <div>
+          <div class="session-name">${s.name}</div>
+          <div class="session-meta">${s.presenter?s.presenter+' · ':''}${s.duration}${s.defaultTime?' · '+s.defaultTime:''}${s.presenterEmail?' · <span style="color:var(--pink)">'+s.presenterEmail+'</span>':' · <em style="opacity:.5">no email set</em>'}</div>
+        </div>
+        <button class="btn-icon" onclick="deleteSession('${s.id}')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+        </button>
+      </div>`).join('')}</div>`;
   }).join('') || '<div class="empty"><div class="empty-icon">📅</div><div class="empty-text">No sessions yet</div></div>';
 }
 
 function renderCycleList() {
   const el = document.getElementById('cycle-list');
   if (!el) return;
-  if (!state.cycles.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">🔄</div><div class="empty-text">No cycles defined yet</div></div>';
-    return;
-  }
+  if (!state.cycles.length) { el.innerHTML='<div class="empty"><div class="empty-icon">🔄</div><div class="empty-text">No cycles defined yet</div></div>'; return; }
   el.innerHTML = state.cycles.map(c => {
-    const count = state.joiners.filter(j => j.cycle === c.id).length;
-    return `<div class="session-row">
-      <div>
-        <div class="session-name">${c.name}</div>
-        <div class="session-meta">${c.startDate ? 'Starts ' + c.startDate + ' · ' : ''}<span style="color:var(--pink);font-weight:600">${count} joiner${count!==1?'s':''}</span></div>
-      </div>
-      <button class="btn-icon" onclick="deleteCycle('${c.id}')" title="Remove">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
-      </button>
+    const count = state.joiners.filter(j=>j.cycle===c.id).length;
+    return `<div class="session-row"><div><div class="session-name">${c.name}</div><div class="session-meta">${c.startDate?'Starts '+c.startDate+' · ':''}<span style="color:var(--pink);font-weight:600">${count} joiner${count!==1?'s':''}</span></div></div>
+      <button class="btn-icon" onclick="deleteCycle('${c.id}')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
     </div>`;
   }).join('');
 }
+
+function renderPCTeam() {
+  const el = document.getElementById('pc-team-list');
+  if (!el) return;
+  if (!state.pcTeam.length) { el.innerHTML='<div style="font-size:12px;color:var(--text-muted);margin-bottom:0.5rem">No P&C members added yet</div>'; return; }
+  el.innerHTML = state.pcTeam.map((m,i) => `
+    <div class="session-row" style="margin-bottom:6px">
+      <div><div class="session-name">${m.name}</div><div class="session-meta">${m.email}</div></div>
+      <button class="btn-icon" onclick="removePCMember(${i})"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>`).join('');
+}
+
+function addPCMember() {
+  const name = document.getElementById('pc-name').value.trim();
+  const email = document.getElementById('pc-email').value.trim();
+  if (!name||!email) { toast('Name and email required'); return; }
+  state.pcTeam.push({name,email});
+  save();
+  document.getElementById('pc-name').value='';
+  document.getElementById('pc-email').value='';
+  renderPCTeam();
+  toast(name+' added to P&C team');
+}
+
+function removePCMember(i) { state.pcTeam.splice(i,1); save(); renderPCTeam(); }
 
 function renderLogFilter() {
   const el = document.getElementById('log-filter');
   if (!el) return;
-  const options = [{id:'all',name:'All joiners'}, ...state.cycles];
-  el.innerHTML = options.map(c =>
-    `<button class="filter-chip${logFilter===c.id?' active':''}" onclick="setLogFilter('${c.id}')">${c.name}</button>`
-  ).join('');
+  el.innerHTML = [{id:'all',name:'All joiners'},...state.cycles].map(c =>
+    `<button class="filter-chip${logFilter===c.id?' active':''}" onclick="setLogFilter('${c.id}')">${c.name}</button>`).join('');
 }
 
-function setLogFilter(id) { logFilter = id; renderJoinerList(); renderLogFilter(); }
+function setLogFilter(id) { logFilter=id; renderJoinerList(); renderLogFilter(); }
 
 function renderJoinerList() {
   const el = document.getElementById('joiner-list');
   if (!el) return;
-  const list = logFilter === 'all' ? state.joiners : state.joiners.filter(j => j.cycle === logFilter);
-  if (!list.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">👥</div><div class="empty-text">No joiners registered yet</div></div>';
-    return;
-  }
+  const list = logFilter==='all' ? state.joiners : state.joiners.filter(j=>j.cycle===logFilter);
+  if (!list.length) { el.innerHTML='<div class="empty"><div class="empty-icon">👥</div><div class="empty-text">No joiners registered yet</div></div>'; return; }
   el.innerHTML = list.map(j => {
-    const snames = j.sessions.map(sid => { const s = state.sessions.find(x => x.id === sid); return s ? s.name : sid; });
-    const cycleObj = state.cycles.find(c => c.id === j.cycle);
-    const added = new Date(j.addedAt).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'});
+    const snames = j.sessions.map(sid => { const s=state.sessions.find(x=>x.id===sid); return s?s.name:sid; });
+    const cycleObj = state.cycles.find(c=>c.id===j.cycle);
+    const added = new Date(j.addedAt).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
     const ini = j.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
     return `<div class="joiner-card">
       <div class="avatar">${ini}</div>
       <div>
-        <div class="joiner-name">${j.name}${cycleObj?`<span class="cycle-label">${cycleObj.name}</span>`:''}</div>
+        <div class="joiner-name">${j.name}
+          ${cycleObj?`<span class="cycle-label">${cycleObj.name}</span>`:''}
+          ${j.calendarCreated?'<span class="cal-label">📅 Invited</span>':''}
+        </div>
         <div class="joiner-meta">${j.email}${j.team?' · '+j.team:''} · Added ${added}</div>
-        <div class="session-tags">${snames.map(n=>`<span class="session-tag">${n}</span>`).join('') || '<span class="session-tag">No sessions</span>'}</div>
+        <div class="session-tags">${snames.map(n=>`<span class="session-tag">${n}</span>`).join('')||'<span class="session-tag">No sessions</span>'}</div>
         ${j.notes?`<div style="font-size:11px;color:var(--text-muted);margin-top:5px;font-style:italic">${j.notes}</div>`:''}
       </div>
-      <button class="btn-icon" onclick="deleteJoiner('${j.id}')" title="Remove">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
+      <button class="btn-icon" onclick="deleteJoiner('${j.id}')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>`;
   }).join('');
 }
 
-// ─── ACTIONS ─────────────────────────────────────────────────────────────────
 async function submitJoiner() {
   const first = document.getElementById('nj-first').value.trim();
-  const last = document.getElementById('nj-last').value.trim();
+  const last  = document.getElementById('nj-last').value.trim();
   const email = document.getElementById('nj-email').value.trim();
   const start = document.getElementById('nj-start').value;
-  const team = document.getElementById('nj-team').value.trim();
+  const team  = document.getElementById('nj-team').value.trim();
   const notes = document.getElementById('nj-notes').value.trim();
 
-  if (!first || !last) { toast('Please enter first and last name'); return; }
-  if (!email) { toast('Please enter an email address'); return; }
+  if (!first||!last) { toast('Please enter first and last name'); return; }
+  if (!email)        { toast('Please enter an email address'); return; }
   if (!selectedSessions.length) { toast('Please select at least one session'); return; }
 
-  const cycleObj = state.cycles.find(c => c.id === selectedCycle);
-  const sessionNames = selectedSessions.map(sid => { const s = state.sessions.find(x => x.id === sid); return s ? s.name : sid; });
+  // Validate dates for selected sessions
+  for (const sid of selectedSessions) {
+    const sc = sessionSchedule[sid];
+    if (!sc||!sc.date) { const s=state.sessions.find(x=>x.id===sid); toast('Please set a date for: '+s.name); return; }
+  }
 
-  const joiner = {
-    id: 'j' + Date.now(),
-    name: first + ' ' + last,
-    email, startDate: start, team, notes,
-    sessions: selectedSessions,
-    cycle: selectedCycle || null,
-    addedAt: new Date().toISOString()
-  };
+  const cycleObj = state.cycles.find(c=>c.id===selectedCycle);
+  const sessionsPayload = selectedSessions.map(sid => {
+    const s  = state.sessions.find(x=>x.id===sid);
+    const sc = sessionSchedule[sid]||{};
+    return { id:sid, name:s.name, date:sc.date, startTime:sc.startTime||s.defaultTime||'09:00', endTime:sc.endTime||s.defaultEndTime||'10:00', presenterEmail:sc.presenterEmail||s.presenterEmail||'', presenterName:sc.presenterName||s.presenter||'' };
+  });
 
-  const btn = document.getElementById('submit-btn');
+  const btn     = document.getElementById('submit-btn');
   const spinner = document.getElementById('submit-spinner');
-  btn.disabled = true;
-  spinner.classList.add('show');
+  btn.disabled = true; spinner.classList.add('show');
 
-  // Send to Google Sheets via hidden form (bypasses CORS)
+  let calendarCreated = false;
+
   if (scriptUrl) {
     try {
       const iframe = document.createElement('iframe');
-      iframe.name = 'hidden-submit';
-      iframe.style.display = 'none';
+      iframe.name = 'hidden-submit'; iframe.style.display='none';
       document.body.appendChild(iframe);
-
       const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = scriptUrl;
-      form.target = 'hidden-submit';
-
-      const payload = {
-        name: joiner.name, email: joiner.email,
-        startDate: joiner.startDate, team: joiner.team,
-        cycle: cycleObj ? cycleObj.name : '',
-        sessions: sessionNames.join(', '), notes: joiner.notes
+      form.method='POST'; form.action=scriptUrl; form.target='hidden-submit';
+      const fields = {
+        joinerName:  first+' '+last,
+        joinerEmail: email,
+        startDate:   start,
+        team, cycle: cycleObj?cycleObj.name:'',
+        sessions:    JSON.stringify(sessionsPayload),
+        pcTeam:      JSON.stringify(state.pcTeam),
+        notes
       };
-
-      Object.entries(payload).forEach(([key, val]) => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = val;
-        form.appendChild(input);
-      });
-
+      Object.entries(fields).forEach(([k,v])=>{ const i=document.createElement('input'); i.type='hidden'; i.name=k; i.value=v; form.appendChild(i); });
       document.body.appendChild(form);
       form.submit();
-
-      setTimeout(() => {
-        document.body.removeChild(form);
-        document.body.removeChild(iframe);
-      }, 3000);
-    } catch(err) {
-      console.warn('Sheets sync failed:', err);
-    }
+      setTimeout(()=>{ document.body.removeChild(form); document.body.removeChild(iframe); },4000);
+      calendarCreated = true;
+    } catch(err) { console.warn('Submit failed:', err); }
   }
 
+  const joiner = {
+    id:'j'+Date.now(), name:first+' '+last, email, startDate:start, team, notes,
+    sessions:selectedSessions, cycle:selectedCycle||null,
+    addedAt:new Date().toISOString(), calendarCreated
+  };
   state.joiners.push(joiner);
   save();
 
-  // Reset form
-  document.getElementById('nj-first').value = '';
-  document.getElementById('nj-last').value = '';
-  document.getElementById('nj-email').value = '';
-  document.getElementById('nj-start').value = '';
-  document.getElementById('nj-team').value = '';
-  document.getElementById('nj-notes').value = '';
-  selectedSessions = [];
-  selectedCycle = '';
+  document.getElementById('nj-first').value='';
+  document.getElementById('nj-last').value='';
+  document.getElementById('nj-email').value='';
+  document.getElementById('nj-start').value='';
+  document.getElementById('nj-team').value='';
+  document.getElementById('nj-notes').value='';
+  selectedSessions=[]; sessionSchedule={}; selectedCycle='';
 
-  btn.disabled = false;
-  spinner.classList.remove('show');
+  btn.disabled=false; spinner.classList.remove('show');
   render();
-  toast('✓ ' + joiner.name + ' registered — ' + sessionNames.length + ' session' + (sessionNames.length !== 1 ? 's' : '') + ' assigned' + (scriptUrl ? ' · saved to Sheets' : ''));
+
+  const msg = calendarCreated
+    ? '✓ '+joiner.name+' registered · '+sessionsPayload.length+' calendar invite'+(sessionsPayload.length!==1?'s':'')+ ' sent'
+    : '✓ '+joiner.name+' registered (connect Apps Script to send invites)';
+  toast(msg);
 }
 
-function togglePanel(id) {
-  const el = document.getElementById(id);
-  el.classList.toggle('open');
-}
+function togglePanel(id) { document.getElementById(id).classList.toggle('open'); }
 
 function saveSession() {
-  const name = document.getElementById('s-name').value.trim();
-  const presenter = document.getElementById('s-presenter').value.trim();
-  const day = document.getElementById('s-day').value;
-  const duration = document.getElementById('s-duration').value.trim();
+  const name  = document.getElementById('s-name').value.trim();
+  const pname = document.getElementById('s-presenter').value.trim();
+  const pemail= document.getElementById('s-presenter-email').value.trim();
+  const day   = document.getElementById('s-day').value;
+  const dur   = document.getElementById('s-duration').value.trim();
+  const time  = document.getElementById('s-time').value;
   if (!name) { toast('Session name required'); return; }
-  state.sessions.push({ id: 's' + Date.now(), name, presenter, day, duration: duration || '—' });
+  // Calculate end time (default +1h)
+  const [h,m] = (time||'09:00').split(':').map(Number);
+  const endH = String(h+1).padStart(2,'0'); const endM = String(m).padStart(2,'0');
+  state.sessions.push({id:'s'+Date.now(), name, presenter:pname, presenterEmail:pemail, day, duration:dur||'1h', defaultTime:time||'09:00', defaultEndTime:endH+':'+endM});
   save();
-  document.getElementById('s-name').value = '';
-  document.getElementById('s-presenter').value = '';
-  document.getElementById('s-duration').value = '';
+  document.getElementById('s-name').value=''; document.getElementById('s-presenter').value='';
+  document.getElementById('s-presenter-email').value=''; document.getElementById('s-duration').value='';
   document.getElementById('add-session-panel').classList.remove('open');
-  render();
-  toast('Session added');
+  render(); toast('Session added');
 }
 
-function deleteSession(id) { state.sessions = state.sessions.filter(s => s.id !== id); save(); render(); }
+function deleteSession(id) { state.sessions=state.sessions.filter(s=>s.id!==id); save(); render(); }
 
 function saveCycle() {
-  const name = document.getElementById('c-name').value.trim();
-  const start = document.getElementById('c-start').value;
+  const name=document.getElementById('c-name').value.trim();
+  const start=document.getElementById('c-start').value;
   if (!name) { toast('Cycle name required'); return; }
-  state.cycles.push({ id: 'c' + Date.now(), name, startDate: start });
+  state.cycles.push({id:'c'+Date.now(),name,startDate:start});
   save();
-  document.getElementById('c-name').value = '';
-  document.getElementById('c-start').value = '';
+  document.getElementById('c-name').value=''; document.getElementById('c-start').value='';
   document.getElementById('add-cycle-panel').classList.remove('open');
-  render();
-  toast('Cycle added');
+  render(); toast('Cycle added');
 }
 
-function deleteCycle(id) { state.cycles = state.cycles.filter(c => c.id !== id); save(); render(); }
-function deleteJoiner(id) { state.joiners = state.joiners.filter(j => j.id !== id); save(); render(); }
+function deleteCycle(id) { state.cycles=state.cycles.filter(c=>c.id!==id); save(); render(); }
+function deleteJoiner(id) { state.joiners=state.joiners.filter(j=>j.id!==id); save(); render(); }
 
 function copyScript() {
-  const text = document.getElementById('script-code').textContent;
-  navigator.clipboard.writeText(text).then(() => toast('Script copied to clipboard'));
+  navigator.clipboard.writeText(document.getElementById('script-code').textContent)
+    .then(()=>toast('Script copied to clipboard'));
 }
 
 async function testConnection() {
-  const url = document.getElementById('sheets-url').value.trim();
+  const url=document.getElementById('sheets-url').value.trim();
   if (!url) { toast('Please paste your Web App URL first'); return; }
-  const status = document.getElementById('connection-status');
-  status.textContent = 'Testing…';
+  const status=document.getElementById('connection-status');
+  status.textContent='Testing…';
   try {
-    await fetch(url, { mode: 'no-cors' });
-    status.textContent = '✓ Connected — you\'re all set!';
-    localStorage.setItem('ata-script-url', url);
-    scriptUrl = url;
-    toast('✓ Google Sheets connected!');
-  } catch(e) {
-    status.textContent = '✗ Could not reach that URL. Double-check it and try again.';
-  }
+    await fetch(url,{mode:'no-cors'});
+    status.textContent='✓ Connected — you\'re all set!';
+    localStorage.setItem('ata-script-url',url);
+    scriptUrl=url;
+    toast('✓ Connected!');
+  } catch(e) { status.textContent='✗ Could not reach that URL. Double-check and try again.'; }
 }
 
 function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3500);
 }
 
 init();
