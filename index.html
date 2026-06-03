@@ -535,7 +535,7 @@
               <div style="position:relative">
                 <pre id="script-code" style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;font-size:11px;line-height:1.6;overflow-x:auto;color:var(--text);font-family:monospace;white-space:pre-wrap">function doPost(e) {
   try {
-    var data = JSON.parse(e.postData.contents);
+    var p = e.parameter;
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = ss.getSheetByName('Joiners');
     if (!sheet) sheet = ss.insertSheet('Joiners');
@@ -551,26 +551,25 @@
 
     sheet.appendRow([
       new Date().toLocaleString(),
-      data.name, data.email, data.startDate,
-      data.team, data.cycle,
-      data.sessions.join(', '), data.notes
+      p.name, p.email, p.startDate,
+      p.team, p.cycle, p.sessions, p.notes
     ]);
 
     return ContentService
-      .createTextOutput(JSON.stringify({status:'ok'}))
-      .setMimeType(ContentService.MimeType.JSON);
+      .createTextOutput('ok')
+      .setMimeType(ContentService.MimeType.TEXT);
 
   } catch(err) {
     return ContentService
-      .createTextOutput(JSON.stringify({status:'error',message:err.toString()}))
-      .setMimeType(ContentService.MimeType.JSON);
+      .createTextOutput('error: ' + err.toString())
+      .setMimeType(ContentService.MimeType.TEXT);
   }
 }
 
 function doGet(e) {
   return ContentService
-    .createTextOutput(JSON.stringify({status:'ok',message:'Ataccama Onboarding API running'}))
-    .setMimeType(ContentService.MimeType.JSON);
+    .createTextOutput('Ataccama Onboarding API running')
+    .setMimeType(ContentService.MimeType.TEXT);
 }</pre>
                 <button class="btn btn-ghost btn-sm" onclick="copyScript()" style="position:absolute;top:8px;right:8px">
                   <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
@@ -846,20 +845,41 @@ async function submitJoiner() {
   btn.disabled = true;
   spinner.classList.add('show');
 
-  // Send to Google Sheets if URL configured
+  // Send to Google Sheets via hidden form (bypasses CORS)
   if (scriptUrl) {
     try {
-      await fetch(scriptUrl, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: joiner.name, email: joiner.email,
-          startDate: joiner.startDate, team: joiner.team,
-          cycle: cycleObj ? cycleObj.name : '',
-          sessions: sessionNames, notes: joiner.notes
-        })
+      const iframe = document.createElement('iframe');
+      iframe.name = 'hidden-submit';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = scriptUrl;
+      form.target = 'hidden-submit';
+
+      const payload = {
+        name: joiner.name, email: joiner.email,
+        startDate: joiner.startDate, team: joiner.team,
+        cycle: cycleObj ? cycleObj.name : '',
+        sessions: sessionNames.join(', '), notes: joiner.notes
+      };
+
+      Object.entries(payload).forEach(([key, val]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = val;
+        form.appendChild(input);
       });
+
+      document.body.appendChild(form);
+      form.submit();
+
+      setTimeout(() => {
+        document.body.removeChild(form);
+        document.body.removeChild(iframe);
+      }, 3000);
     } catch(err) {
       console.warn('Sheets sync failed:', err);
     }
